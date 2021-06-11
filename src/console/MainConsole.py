@@ -1,18 +1,28 @@
 def main_menu():
     while True:
-        print("메뉴 내용")
-        user_select = int(input("선택하세요 >> "))
-        if user_select == 1:
+        print("=========================================")
+        print("                 *메인메뉴* ")
+        print("     *1.전자출입명부 작성란입니다*")
+        print("     *2.출입자를 검색합니다*")
+        print("     *3.환경설정입니다*")
+        print("     *4.프로그램 종료*")
+        print("=========================================")
+        print("*메뉴*를 선택하세요 :")
+
+        try:
+            select = int(input("메뉴를 선택하세요:"))
+        except:
+            print("정수를 입력해주세요.")
+            continue
+
+        if select == 1:
             None
-            # 출입자 입력받는 부분
-        elif user_select == 2:
+        elif select == 2:
             None
-            # 검색하는 부분
-        elif user_select == 3:
+        elif select == 3:
             None
-            # 설정하는 부분
-        elif user_select == 4:
-            None
-            return
+        elif select == 4:
+            if 'y' == input("\n정말 종료하시겠습니까?(Y/N) >>>").lower():
+                break
         else:
-            print("잘못입력하셨습니다.")
+            print("잘못 입력하셨습니다.")
