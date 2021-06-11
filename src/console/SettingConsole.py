@@ -2,6 +2,8 @@
 # 아무것도 입력 안 할시 2시간으로 설정하기
 # db파일 어디다 저장할지 물어본다
 # 입력받는다
+from core.tools import int_input
+
 
 def setting_menu():
     while True:
@@ -11,11 +13,7 @@ def setting_menu():
         print("2. database 저장 위치")
         print("=================================")
 
-        try:
-            select = int(input("환경설정에서 설정할 것을 선택해주세요:"))
-        except:
-            print("정수를 입력해주세요.")
-            continue
+        select = int_input("환경설정에서 설정할 것을 선택해주세요:")
 
         if select == 1:
             set_search_range()

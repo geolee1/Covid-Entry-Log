@@ -54,3 +54,11 @@ def checkPhoneNumber(raw_phone: str) -> bool:  # 전화번호 형식 확인 함�
         return False
 
     return True
+
+
+def int_input(string: str) -> int:
+    while True:
+        try:
+            return int(input(string))
+        except:
+            print("정수를 입력해주세요.")

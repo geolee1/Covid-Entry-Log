@@ -1,3 +1,6 @@
+from core.tools import int_input
+
+
 def main_menu():
     while True:
         print("=========================================")
@@ -9,11 +12,7 @@ def main_menu():
         print("=========================================")
         print("*메뉴*를 선택하세요 :")
 
-        try:
-            select = int(input("메뉴를 선택하세요:"))
-        except:
-            print("정수를 입력해주세요.")
-            continue
+        select = int_input("메뉴를 선택하세요:")
 
         if select == 1:
             None
