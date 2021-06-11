@@ -2,5 +2,4 @@
 .vscode/
 src/console/__pycache__/
 src/core/__pycache__/
-src/gui/
 setup.py
