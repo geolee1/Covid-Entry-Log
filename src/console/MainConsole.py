@@ -1,3 +1,4 @@
+from console.EntryLogConsole import input_person
 from core.tools import int_input
 
 
@@ -15,7 +16,7 @@ def main_menu():
         select = int_input("메뉴를 선택하세요:")
 
         if select == 1:
-            None
+            input_person()
         elif select == 2:
             None
         elif select == 3:
