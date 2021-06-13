@@ -1,4 +1,7 @@
-def checkPhoneNumber(raw_phone: str) -> bool:  # 전화번호 형식 확인 함수
+from core.person import PhoneNumberError
+
+
+def checkPhoneNumber(phone: str) -> bool:  # 전화번호 형식 확인 함수
     prefixs = [
         '010',  # 이동전화
         '011',  # 이동전화
@@ -25,13 +28,7 @@ def checkPhoneNumber(raw_phone: str) -> bool:  # 전화번호 형식 확인 함�
         '064',  # 제주특별자치시도 지역번호
         '070'  # 인터넷 전화
     ]
-    phone = raw_phone.replace('-', '').replace(' ', '')  # 숫자로만 이루어진 형태로 변환
-
-    try:  # 입력된 정보가 정수인지 확인
-        int(phone)
-    except:
-        # print("정수아님")  # 테스트코드
-        return False
+    phone = get_phone_onlynum(phone)
 
     if len(phone) <= 6 or len(phone) > 11:  # 전화번호 길이가 맞는지 확인
         # print("전화번호길이아님")  # 테스트코드
@@ -54,6 +51,16 @@ def checkPhoneNumber(raw_phone: str) -> bool:  # 전화번호 형식 확인 함�
         return False
 
     return True
+
+
+def get_phone_onlynum(phone: str):
+    result = phone.replace('-', '').replace(' ', '')  # 숫자로만 이루어진 형태로 변환
+    try:  # 입력된 정보가 정수인지 확인
+        int(phone)
+        return result
+    except:
+        # print("정수아님")  # 테스트코드
+        raise PhoneNumberError
 
 
 def int_input(string: str) -> int:

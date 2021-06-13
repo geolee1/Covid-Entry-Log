@@ -28,7 +28,28 @@ def append_db(one: Person):
         writer.writerow(one.person_info())
 
 
-def find_db(date: str = "", time: str = "", name: str = "", phone: str = ""):  # 작업해야함
+def find_db(date: str = None, time: str = None, name: str = None, phone: str = None):  # 작업해야함
+    persons = get_all_db()
+
+    search_result = []
+    check = False
+    for person in persons:
+        if name is not None:
+            if person.name == name:
+                check = True
+        if time is not None:
+            if person.get_time() == time:
+                check = True
+        if date is not None:
+            if person.get_date() == date:
+                check = True
+        if phone is not None:
+            if person.phone == phone:
+                None
+    return search_result
+
+
+def get_all_db() -> list:
     file_path = get_path("Entry Log.csv")
     with open(file_path, newline='') as database_file:
         reader = csv.reader(database_file)
@@ -37,14 +58,7 @@ def find_db(date: str = "", time: str = "", name: str = "", phone: str = ""):  #
             raw_DB.append(row)
         DB = []
         for one in raw_DB[1:]:
-            # DB 리턴을 딕셔너리 리스트로 할때
-            # save_dict = {}
-            # for no in range(len(one)):
-            #     save_dict[raw_DB[0][no]] = oneㄸ[no]
-            # DB.append(save_dict)
-
-            # DB 리턴을 Person 클래스 리스트로 할때
-            save_person = Person(
-                time=one[0], privacy=one[1], third_privacy=one[2], name=one[3], phone=[4], address=one[5])
-            DB.append(save_person)
+            saved_person = Person(
+                time=one[0], privacy=one[1], third_privacy=one[2], name=one[3], phone=one[4], address=one[5])
+            DB.append(saved_person)
         return DB
