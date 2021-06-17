@@ -1,5 +1,6 @@
 from time import localtime, strftime
-from core.tools import checkPhoneNumber
+from core.tools import check_phone_number
+from core.tools import PhoneNumberError
 
 
 class PrivacyError(Exception):
@@ -12,11 +13,6 @@ class ThirdPrivacyError(Exception):
         return "개인정보 제3자 제공에 동의해주세요."
 
 
-class PhoneNumberError(Exception):
-    def __str__(self) -> str:
-        return "전화번호가 올바르지 않습니다."
-
-
 class Person:
     # name: str  # 성명 (Name)
     # phone: str  # 휴대전화번호 (Phone)
@@ -27,7 +23,7 @@ class Person:
     # __time  # 방문시간 (Time of Visit) YYYY-MM-DD/HH:MM:SS
     def __init__(self, name, phone, address, privacy, third_privacy, time: str = None) -> None:
         if privacy and third_privacy:
-            if not checkPhoneNumber(phone):
+            if not check_phone_number(phone):
                 raise PhoneNumberError
             self.name = name
             self.phone = phone

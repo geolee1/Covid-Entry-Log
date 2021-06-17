@@ -1,4 +1,6 @@
-from core.person import PhoneNumberError
+class PhoneNumberError(Exception):
+    def __str__(self) -> str:
+        return "전화번호가 올바르지 않습니다."
 
 
 def checkPhoneNumber(phone: str) -> bool:  # 전화번호 형식 확인 함수
@@ -53,10 +55,10 @@ def checkPhoneNumber(phone: str) -> bool:  # 전화번호 형식 확인 함수
     return True
 
 
-def get_phone_onlynum(phone: str):
+def get_phone_onlynum(phone: str) -> str:
     result = phone.replace('-', '').replace(' ', '')  # 숫자로만 이루어진 형태로 변환
     try:  # 입력된 정보가 정수인지 확인
-        int(phone)
+        int(result)
         return result
     except:
         # print("정수아님")  # 테스트코드
