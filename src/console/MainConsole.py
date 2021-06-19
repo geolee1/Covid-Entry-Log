@@ -1,28 +1,27 @@
 from console.EntryLogConsole import input_person
-from core.tools import int_input
+from console.SearchConsole import search_person
+from core.tools import int_input, menu_input, clear, yes_or_no
 
 
 def main_menu():
     while True:
-        print("=========================================")
-        print("                 *메인메뉴* ")
-        print("     *1.전자출입명부 작성란입니다*")
-        print("     *2.출입자를 검색합니다*")
-        print("     *3.환경설정입니다*")
-        print("     *4.프로그램 종료*")
-        print("=========================================")
-        print("*메뉴*를 선택하세요 :")
+        clear()
+        print("메인메뉴\n")
 
-        select = int_input("메뉴를 선택하세요:")
+        print("1. 출입명부 작성")
+        print("2. 출입자 검색")
+        print("3. 환경설정")
+        print("4. 프로그램 종료\n")
+
+        select = menu_input("메뉴를 선택하세요\n>> ", 1, 4)
 
         if select == 1:
             input_person()
         elif select == 2:
-            None
+            search_person()
         elif select == 3:
             None
         elif select == 4:
-            if 'y' == input("\n정말 종료하시겠습니까?(Y/N) >>>").lower():
-                break
-        else:
-            print("잘못 입력하셨습니다.")
+            print()
+            if yes_or_no("정말 종료하시겠습니까? (Y/N)\n>> "):
+                return

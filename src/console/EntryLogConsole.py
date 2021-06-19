@@ -1,53 +1,62 @@
 # 출입 명부 작성
 # 개인정보 수집 동의, 이름, 전화번호, 주소 입력받기
+from time import sleep
 from core.person import Person
 from core.database import append_db
+from os.path import dirname, abspath
+from core.tools import clear, yes_or_no
+
+PRIVACY_DIR_PATH = dirname(
+    abspath(dirname(abspath(dirname(__file__))))) + "\Privacy Policy"
+
+
+def get_privacy_text(type: str) -> str:
+    privacy_text = ""
+    with open(PRIVACY_DIR_PATH + f"\{type}.txt", mode="r", encoding="utf-8") as file:
+        for oneline in file.readlines():
+            privacy_text += oneline
+    return privacy_text
 
 
 def input_person():
     while True:
-        print("[개인정보 수집 이용 안내문]")
-        answer_is = "n"
-        while (answer_is != "y"):
-            answer_is = input("개인정보 수집 및 이용에 동의하십니까? (y/n) ")
+        clear()
+        if not yes_or_no("어서오십시오. 입력하시겠습니까? (Y/N)\n>> "):
+            return
 
-            if (input == "y"):
-                privacy = True
-                break
-            else:
-                print("반드시 동의해야합니다")
-                continue
+        clear()
+        print(get_privacy_text("개인정보 수집 이용 동의"))
+        privacy = yes_or_no("개인정보 수집 및 이용에 동의하십니까? (Y/N)\n>> ",
+                            no_false="반드시 동의하셔야 합니다.\n")
 
-        print("[개인정보 제3자 제공 안내문]\n")
-        answer_is = "n"
-        while (answer_is != "y"):
-            answer_is = input("개인정보 제3자 제공에 동의하십니까? (Y/N) ")
+        clear()
+        print(get_privacy_text("개인정보 제3자 제공 동의"))
+        third_privacy = yes_or_no("개인정보 제3자 제공에 동의하십니까? (Y/N)\n>> ",
+                                  no_false="반드시 동의하셔야 합니다.\n")
 
-            if input == "y":
-                third_privacy = True
-                break
-            else:
-                print("반드시 동의해야합니다")
+        clear()
+        while True:
+            name = input("이름\n>> ")
+            print()
+            phone = input("전화번호\n>> ")
+            print()
+            address = input("주소\n>> ")
+            print()
+            if yes_or_no(f"{name}, {phone}, {address} 맞습니까? (Y/N)\n>> "):
+                try:
+                    new_person = Person(name, phone, address,
+                                        privacy, third_privacy)
+                except:
+                    print()
+                    print("입력된 정보가 올바르지 않습니다. 다시 입력하세요.\n")
+                    continue
 
-        # one_person = dict()
-        answer_is = "n"
-        while (answer_is != "y"):
-            name = input("이름: ")
-            phone = input("전화번호: ")
-            address = input("주소: ")
-            # one_person["name"] = input("이름: ")
-            # one_person["phone"] = input("전화번호: ")
-            # one_person["address"] = input("주소: ")
-            # one_person = input(f"{one_person.get('name')}, {one_person.get('phone')}, {one_person.get('address')} 맞습니까? ("Y/N")")
-            answer_is = input(f"{name}, {phone}, {address} 맞습니까? (Y/N)")
-            if (answer_is != "y"):
-                new_person = Person(name, phone, address,
-                                    privacy, third_privacy)
                 append_db(new_person)
-                print("정상적으로 입력되었습니다.")
-                # {------------------}
+                print()
+                print("성공적으로 입력되었습니다. 잠시 뒤에 자동으로 넘어갑니다.")
+                print(
+                    f"{new_person.get_date()}, {new_person.get_time()}, {new_person.name}, {new_person.phone}, {new_person.address}")
+                sleep(10)
                 break
-
             else:
-                print("개인정보를 수정하십시오")
                 continue

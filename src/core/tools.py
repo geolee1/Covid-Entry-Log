@@ -1,3 +1,7 @@
+import platform
+import os
+
+
 class PhoneNumberError(Exception):
     def __str__(self) -> str:
         return "전화번호가 올바르지 않습니다."
@@ -71,3 +75,49 @@ def int_input(string: str) -> int:
             return int(input(string))
         except:
             print("정수를 입력해주세요.")
+
+
+def hour_to_sec(hour: int) -> int:
+    MIN_IN_HOUR = 60
+    SEC_IN_MIN = 60
+    return hour * MIN_IN_HOUR * SEC_IN_MIN
+
+
+def menu_input(string: str, start_num: int, end_num: int) -> int:
+    while True:
+        user_input = input(string)
+        try:
+            result = int(user_input)
+        except:
+            print("숫자를 입력해 주세요.\n")
+            continue
+        if result < start_num:
+            print("숫자가 너무 작습니다.\n")
+            continue
+        elif result > end_num:
+            print("숫자가 너무 큽니다.\n")
+            continue
+        else:
+            return result
+
+
+def yes_or_no(string: str = "Y/N \n>> ", no_false: str = None) -> bool:
+    while True:
+        user_input = input(string)
+        if user_input.lower() == "y" or user_input.lower() == "yes":
+            return True
+        elif user_input.lower() == "n" or user_input.lower() == "no":
+            if no_false is not None:
+                print(no_false)
+                continue
+            return False
+        else:
+            print("잘못 입력하셨습니다.\n")
+            continue
+
+
+def clear():
+    if platform.system() == "Windows":
+        os.system("cls")
+    else:
+        os.system("clear")
