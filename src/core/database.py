@@ -2,6 +2,7 @@ from os.path import isfile, isdir
 from pathlib import Path
 from core.setting import get_path
 from core.person import Person
+from core.tools import get_phone_onlynum
 import csv
 
 
@@ -28,25 +29,27 @@ def append_db(one: Person):
         writer.writerow(one.person_info())
 
 
-def find_db(date: str = None, time: str = None, name: str = None, phone: str = None):  # 작업해야함
+def find_db(type: str, value):  # 작업해야함
     persons = get_all_db()
 
-    search_result = []
-    check = False
-    for person in persons:
-        if name is not None:
-            if person.name == name:
-                check = True
-        if time is not None:
-            if person.get_time() == time:
-                check = True
-        if date is not None:
-            if person.get_date() == date:
-                check = True
-        if phone is not None:
-            if person.phone == phone:
-                None
-    return search_result
+    value = value.strip().replace(' ', '')
+    find = []
+    if type == "name":
+        for person in persons:
+            if value == person.name:
+                find.append(person)
+    elif type == "phone":
+        for person in persons:
+            if get_phone_onlynum(value) == get_phone_onlynum(person.phone):
+                find.append(person)
+    elif type == "date":
+        for person in persons:
+            if value == person.get_date():
+                find.append(person)
+    else:
+        raise TypeError
+
+    return find
 
 
 def get_all_db() -> list:

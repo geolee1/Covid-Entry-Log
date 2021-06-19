@@ -3,7 +3,7 @@ class PhoneNumberError(Exception):
         return "전화번호가 올바르지 않습니다."
 
 
-def checkPhoneNumber(phone: str) -> bool:  # 전화번호 형식 확인 함수
+def check_phone_number(phone: str) -> bool:  # 전화번호 형식 확인 함수
     prefixs = [
         '010',  # 이동전화
         '011',  # 이동전화

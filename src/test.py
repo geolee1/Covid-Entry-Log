@@ -15,8 +15,7 @@ if not isfile(get_path("Entry Log.csv")):
 # one = Person("이지오", "010-3019-6324", "서울시 강남구", True, True)
 # append_db(one)
 
-DB = find_db()
+DB = find_db("date", "2021-05-30")
 
-print(DB)
 for one in DB:
     print(one.person_info())
