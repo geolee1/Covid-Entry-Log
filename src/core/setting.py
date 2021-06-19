@@ -8,7 +8,7 @@ from shutil import move
 def get_search_time() -> int:
     setting = ConfigParser()
     setting.read(get_path("Setting.ini"))
-    return setting["Find"].get("search_time")
+    return int(setting["Find"].get("search_time"))
 
 
 def get_path(name: str = None) -> str:
@@ -50,16 +50,35 @@ def set_defalut():
 def change_database_path(new_path: str):
     setting_path = get_path("Setting.ini")
 
-    if not isdir(new_path):
-        Path(new_path).mkdir(parents=True, exist_ok=True)
+    try:
+        if not isdir(new_path):
+            Path(new_path).mkdir(parents=True, exist_ok=True)
+
+        setting = ConfigParser()
+        setting.read(setting_path)
+
+        old_path = setting["Database"].get("path")
+        setting["Database"]["path"] = new_path
+        with open(setting_path, mode="w") as setting_file:
+            setting.write(setting_file)
+
+        if isfile(old_path + "\\Entry Log.csv"):
+            move(old_path + "\\Entry Log.csv", new_path + "\\Entry Log.csv")
+
+        return True
+
+    except:
+        print("주소가 잘못되었습니다\n")
+        return False
+
+
+def change_search_time(new_hour: int):
+    setting_path = get_path("Setting.ini")
 
     setting = ConfigParser()
     setting.read(setting_path)
 
-    old_path = setting["Database"].get("path")
-    setting["Database"]["path"] = new_path
+    setting["Find"]["search_time"] = str(new_hour)
+
     with open(setting_path, mode="w") as setting_file:
         setting.write(setting_file)
-
-    if isfile(old_path + "\\Entry Log.csv"):
-        move(old_path + "\\Entry Log.csv", new_path + "\\Entry Log.csv")
