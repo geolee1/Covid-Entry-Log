@@ -49,8 +49,33 @@ class Person:
     def get_time(self) -> str:
         return self.__time.split("/")[1]
 
+    def get_whole_time(self) -> str:
+        return self.__time
+
     def get_privacy(self) -> bool:
         return self.__privacy
 
     def get_third_privacy(self) -> bool:
         return self.__third_privacy
+
+
+def print_person(persons: list, index=False):
+    if persons != []:
+        print()
+        if index is True:
+            print("no\t방문일\t\t방문시각\t이름\t전화번호\t주소")
+            LIST_LEN = len(persons)
+            for index in range(LIST_LEN):
+                print(
+                    f"#{index}\t{persons[index].get_date()}\t{persons[index].get_time()}\t{persons[index].name}\t{persons[index].phone}\t{persons[index].address}")
+
+            print()
+
+        else:
+            print("방문일\t\t방문시각\t이름\t전화번호\t주소")
+            for person in persons:
+                print(
+                    f"{person.get_date()}\t{person.get_time()}\t{person.name}\t{person.phone}\t{person.address}")
+        print()
+    else:
+        print("검색 결과가 없습니다.\n")

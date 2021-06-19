@@ -1,21 +1,7 @@
-from genericpath import isfile
-from core.database import append_db, create_db, find_db
-from core.person import Person
-from core.setting import get_path, set_defalut
+import time
 
-file_path = get_path("Setting.ini")
-if not isfile(file_path):
-    set_defalut()
+t0 = time.time()
+print(time.strftime("%I %M %p", time.localtime(t0)))
 
-print(file_path)
-
-if not isfile(get_path("Entry Log.csv")):
-    create_db()
-
-# one = Person("이지오", "010-3019-6324", "서울시 강남구", True, True)
-# append_db(one)
-
-DB = find_db("date", "2021-05-30")
-
-for one in DB:
-    print(one.person_info())
+t1 = t0 + 60*60
+print(time.strftime("%I %M %p", time.localtime(t1)))

@@ -1,6 +1,7 @@
 from os.path import isfile, isdir
 from pathlib import Path
-from core.setting import get_path
+from time import strptime, mktime
+from core.setting import get_path, get_search_time
 from core.person import Person
 from core.tools import get_phone_onlynum
 import csv
@@ -65,3 +66,23 @@ def get_all_db() -> list:
                 time=one[0], privacy=one[1], third_privacy=one[2], name=one[3], phone=one[4], address=one[5])
             DB.append(saved_person)
         return DB
+
+
+def time_search_db(person: Person) -> list:
+    MIN = 60
+    SEC = 60
+    DB = get_all_db()
+    search_time = mktime(
+        strptime(person.get_whole_time(), "%Y-%m-%d/%H:%M:%S"))
+
+    result = []
+    for one in DB:
+        one_time = mktime(strptime(one.get_whole_time(), "%Y-%m-%d/%H:%M:%S"))
+        if one_time < search_time:
+            continue
+        elif one_time > search_time + get_search_time() * MIN * SEC:
+            break
+        else:
+            result.append(one)
+
+    return result

@@ -69,41 +69,30 @@ def get_phone_onlynum(phone: str) -> str:
         raise PhoneNumberError
 
 
-def int_input(string: str) -> int:
+def num_input(string: str) -> int:
     while True:
+        user_input = input(f"{string}\n>> ")
         try:
-            return int(input(string))
+            return int(user_input)
         except:
-            print("정수를 입력해주세요.")
-
-
-def hour_to_sec(hour: int) -> int:
-    MIN_IN_HOUR = 60
-    SEC_IN_MIN = 60
-    return hour * MIN_IN_HOUR * SEC_IN_MIN
+            print("숫자를 입력해 주세요.\n")
+            continue
 
 
 def menu_input(string: str, start_num: int, end_num: int) -> int:
     while True:
-        user_input = input(string)
-        try:
-            result = int(user_input)
-        except:
-            print("숫자를 입력해 주세요.\n")
-            continue
+        result = num_input(string)
         if result < start_num:
             print("숫자가 너무 작습니다.\n")
-            continue
         elif result > end_num:
             print("숫자가 너무 큽니다.\n")
-            continue
         else:
             return result
 
 
 def yes_or_no(string: str = "Y/N \n>> ", no_false: str = None) -> bool:
     while True:
-        user_input = input(string)
+        user_input = input(f"{string} (Y/N)\n>> ")
         if user_input.lower() == "y" or user_input.lower() == "yes":
             return True
         elif user_input.lower() == "n" or user_input.lower() == "no":
