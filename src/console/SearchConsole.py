@@ -1,5 +1,6 @@
 from core.database import find_db, time_search_db, get_all_db
 from core.person import print_person
+from core.setting import get_search_time
 from core.tools import menu_input, yes_or_no, clear
 
 
@@ -34,7 +35,8 @@ def search_person():
         print_person(persons, index=True)
 
         if persons != []:
-            select = menu_input("자세히 검색할 사람을 선택해주세요.", 0, len(persons))
+            select = menu_input(
+                f"선택한 사람으로부터 {get_search_time()} 시간 동안 출입한 사람을 검색합니다", 0, len(persons)-1)
 
             time_persons = time_search_db(persons[select])
             print_person(time_persons)

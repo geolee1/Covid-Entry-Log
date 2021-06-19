@@ -36,12 +36,11 @@ def set_search_range():
         sleep(3)
         return
 
-    if change_search_time(set_hour):
-        print()
-        print("성공적으로 설정되었습니다. 잠시 뒤 메뉴로 돌아갑니다.")
-        print(f"현재 설정된 시간 : {get_search_time()} 시간\n")
-
-        sleep(5)
+    change_search_time(set_hour)
+    print()
+    print("성공적으로 설정되었습니다. 잠시 뒤 메뉴로 돌아갑니다.")
+    print(f"현재 설정된 시간 : {get_search_time()} 시간\n")
+    sleep(5)
     return
 
 
@@ -55,8 +54,9 @@ def set_db_location():
         sleep(3)
         return
 
-    change_database_path(new_path)
-    print()
-    print("성공적으로 설정되었습니다. 잠시 뒤 메뉴로 돌아갑니다.")
-    print(f"현재 설정된 경로 : {get_path('Database')}\n")
-    sleep(5)
+    if change_database_path(new_path):
+        print()
+        print("성공적으로 설정되었습니다. 잠시 뒤 메뉴로 돌아갑니다.")
+        print(f"현재 설정된 경로 : {get_path('Database')}\n")
+        sleep(5)
+    return
