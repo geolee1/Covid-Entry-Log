@@ -4,7 +4,7 @@
 # 입력받는다
 from time import sleep
 from core.setting import change_database_path, change_search_time, get_search_time, get_path
-from core.tools import clear, menu_input
+from core.tools import clear, menu_input, yes_or_no
 
 
 def setting_menu():
@@ -27,6 +27,7 @@ def setting_menu():
 
 
 def set_search_range():
+    print()
     print(f"현재 설정된 시간 : {get_search_time()} 시간\n")
     set_hour = menu_input("검색할 시간을 설정하세요 (1~24, 취소하려면 0)", 0, 24)
 
@@ -45,18 +46,24 @@ def set_search_range():
 
 
 def set_db_location():
-    print(f"현재 설정된 경로 : {get_path('Database')}\n")
-    new_path = input("바꿀 경로를 입력하세요 (폴더경로 입력, 취소하려면 0)\n>> ")
-
-    if new_path == '0':
+    while True:
         print()
-        print("취소되었습니다.")
-        sleep(3)
-        return
-
-    if change_database_path(new_path):
-        print()
-        print("성공적으로 설정되었습니다. 잠시 뒤 메뉴로 돌아갑니다.")
         print(f"현재 설정된 경로 : {get_path('Database')}\n")
-        sleep(5)
-    return
+        new_path = input("바꿀 경로를 입력하세요 (폴더경로 입력, 취소하려면 0)\n>> ")
+
+        if new_path == '0':
+            print()
+            print("취소되었습니다.")
+            sleep(3)
+            return
+
+        print()
+        if not yes_or_no(f"{new_path} 맞습니까?"):
+            continue
+
+        if change_database_path(new_path):
+            print()
+            print("성공적으로 설정되었습니다. 잠시 뒤 메뉴로 돌아갑니다.")
+            print(f"현재 설정된 경로 : {get_path('Database')}\n")
+            sleep(5)
+        return

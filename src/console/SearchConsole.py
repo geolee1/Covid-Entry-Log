@@ -36,7 +36,7 @@ def search_person():
 
         if persons != []:
             select = menu_input(
-                f"선택한 사람으로부터 {get_search_time()} 시간 동안 출입한 사람을 검색합니다", 0, len(persons)-1)
+                f"선택한 사람으로부터 {get_search_time()} 시간 동안 출입한 사람을 검색합니다.\n검색할 사람의 번호를 입력해주세요.", 0, len(persons)-1)
 
             time_persons = time_search_db(persons[select])
             print_person(time_persons)
