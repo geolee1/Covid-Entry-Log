@@ -59,4 +59,5 @@ def input_person():
                 sleep(5)
                 break
             else:
+                print()
                 continue
